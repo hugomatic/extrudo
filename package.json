@@ -1,0 +1,11 @@
+{
+  "name": "extrudo",
+  "version": "0.1.0",
+  "description": "FDM slicing engine GCODE",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hugo@hugomatic.ca",
+  "license": "Apache 2"
+}
