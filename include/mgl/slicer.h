@@ -95,10 +95,10 @@ public:
 	Slicer(const SlicerConfig &slicerCfg, ProgressBar *progress =NULL);
 
 	/// TBD
-	void tomographyze( const char* modelFile, Tomograph &tomograph);
+	void tomographyze(const Meshy &mesh, Tomograph &tomograph);
 
 	/// TBD
-    void outlinesForSlice(const Meshy & mesh, size_t sliceId, libthing::SegmentTable & segments);
+        void outlinesForSlice(const Meshy & mesh, size_t sliceId, libthing::SegmentTable & segments);
 
 	/// TBD
 	void loopsFromLineSegments(const std::vector<libthing::LineSegment2>& unorderedSegments,

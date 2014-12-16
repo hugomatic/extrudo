@@ -25,24 +25,24 @@ void mgl::miracleGrue(const GCoderConfig &gcoderCfg,
                       std::vector< SliceData >  &slices,
                       ProgressBar *progress)
 {
+	
+	Meshy mesh(slicerCfg.firstLayerZ, slicerCfg.layerH);
+	mesh.readStlFile(modelFile);
 
 	Slicer slicer(slicerCfg, progress);
-
-	slicer.tomographyze(modelFile, tomograph);
+	slicer.tomographyze(mesh, tomograph);
 
 	Regioner regioner(slicerCfg, progress);
-
 	regioner.generateSkeleton(tomograph, regions);
 
 	Pather pather(progress);
-
 	pather.generatePaths(tomograph, regions, slices);
 
 	// pather.writeGcode(gcodeFileStr, modelFile, slices);
 	std::ofstream gout(gcodeFile);
 
         GCoder gcoder(gcoderCfg, progress);
-    gcoder.writeGcodeFile(slices, tomograph.layerMeasure, gout, modelFile, firstSliceIdx, lastSliceIdx);
+        gcoder.writeGcodeFile(slices, tomograph.layerMeasure, gout, modelFile, firstSliceIdx, lastSliceIdx);
 
 	gout.close();
 
