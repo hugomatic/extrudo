@@ -60,8 +60,8 @@ public:
 
 };
 
-class GCoderConfig;
-class SlicerConfig;
+struct GCoderConfig;
+struct SlicerConfig;
 
 void loadGCoderConfigFromFile(const Configuration& conf, GCoderConfig &gcoder);
 void loadSlicerConfigFromFile( const Configuration &config, SlicerConfig &slicer);

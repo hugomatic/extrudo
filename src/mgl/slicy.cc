@@ -19,17 +19,16 @@ Slicy::Slicy(const std::vector<Triangle3> &allTriangles,
 			Scalar layerH,
 			unsigned int sliceCount,
 			const char* scadFile)
-		:tol(1e-6),
-		 layerW(layerW),
-		 layerH(layerH),
+		:layerW(layerW),
 		 scadFile(scadFile),
+		 sliceCount(sliceCount),
+		 tol(1e-6),
 		 allTriangles(allTriangles),
 		 limits(limits),
-		 sliceCount(sliceCount)
+		 layerH(layerH)
 {
 
-
-    openScadFile(scadFile, layerW, layerH, sliceCount);
+        openScadFile(scadFile, layerW, layerH, sliceCount);
 
 	tubularLimits = limits.centeredLimits();
 	tubularLimits.inflate(1.0, 1.0, 0.0);
@@ -43,9 +42,8 @@ Slicy::Slicy(const std::vector<Triangle3> &allTriangles,
 	toRotationCenter[1] = -c[1];
 	backToOrigin[0] = c[0];
 	backToOrigin[1] = c[1];
-
-	Vector3 rotationCenter = limits.center();
 }
+
 
 Slicy::~Slicy()
 {
@@ -211,7 +209,6 @@ bool Slicy::slice(  const TriangleIndices & trianglesForSlice,
 	// lets order the segment into loops.
 	SegmentTable outlinesSegments;
 	loopsAndHoleOgy(segments, tol, outlinesSegments);
-	unsigned int outlineSegmentCount = outlinesSegments.size();
 	createPolysFromloopSegments(outlinesSegments, slice.extruderSlices[extruderId].boundary);
 
 

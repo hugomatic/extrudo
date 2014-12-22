@@ -112,8 +112,6 @@ public:
 private:
 
 
-	index_t findOrCreateNewEdge(const libthing::Vector3 &coords0, const libthing::Vector3 &coords1, size_t face);
-
 	index_t findOrCreateEdge(index_t v0, index_t v1, size_t face);
 
 	index_t findOrCreateVertex(const libthing::Vector3 &coords);

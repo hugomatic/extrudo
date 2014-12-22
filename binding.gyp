@@ -15,8 +15,6 @@
         "src/mgl/abstractable.cc",
         "src/mgl/clipper.cc",
         "src/mgl/configuration.cc",
-        "src/mgl/connexity.cc",
-        "src/mgl/Edge.cc",
         "src/mgl/gcoder.cc",
         "src/mgl/grid.cc",
         "src/mgl/infill.cc",
