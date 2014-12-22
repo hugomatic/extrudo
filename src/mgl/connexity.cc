@@ -4,9 +4,6 @@ using namespace mgl;
 using namespace std;
 using namespace libthing;
 
-#define EZLOGGER_OUTPUT_FILENAME "ezlogger.txt"
-#include "ezlogger/ezlogger_headers.hpp"
-
 
 index_t mgl::findOrCreateVertexIndex(std::vector<Vertex>& vertices ,
 								const Vector3 &coords,
@@ -68,21 +65,14 @@ index_t Connexity::addTriangle(const Triangle3 &t)
 {
 	index_t faceId = faces.size();
 
-//		EZLOGGERVLSTREAM(axter::log_often) << "Slicy::addTriangle " << std::endl;
-//		EZLOGGERVLSTREAM(axter::log_often) << "  v0 " << t.vertex1 << " v1" << t.vertex2 << " v3 " << t.vertex3 << std::endl;
-//		EZLOGGERVLSTREAM(axter::log_often) << "  id:" << faceId << ": edge (v1,v2, f1,f2)" << std::endl;
-
 	index_t v0 = findOrCreateVertex(t[0]);
 	index_t v1 = findOrCreateVertex(t[1]);
 	index_t v2 = findOrCreateVertex(t[2]);
 
 	Face face;
 	face.edgeIndices[0] = findOrCreateEdge(v0, v1, faceId);
-//		EZLOGGERVLSTREAM(axter::log_often) << "   a) " << face.edge0 << "(" << edges[face.edge0] << ")" << std::endl;
 	face.edgeIndices[1] = findOrCreateEdge(v1, v2, faceId);
-//		EZLOGGERVLSTREAM(axter::log_often) << "   b) " << face.edge1 << "(" << edges[face.edge1] << ")" << std::endl;
 	face.edgeIndices[2] = findOrCreateEdge(v2, v0, faceId);
-//		EZLOGGERVLSTREAM(axter::log_often) << "   c) " << face.edge2 << "(" << edges[face.edge2] << ")" << std::endl;
 
 	face.vertexIndices[0] = v0;
 	face.vertexIndices[1] = v1;
@@ -155,24 +145,17 @@ void Connexity::dump(std::ostream& out) const
 	out << "  edges: " << edges.size() << std::endl;
 	out << "  faces: " << faces.size() << std::endl;
 
-	EZLOGGERVLSTREAM(axter::log_often) << std::endl;
-
-	EZLOGGERVLSTREAM(axter::log_often) << "Vertices:" << std::endl;
 
 	int x =0;
 	for(std::vector<Vertex>::const_iterator i = vertices.begin(); i != vertices.end(); i++ )
 	{
-		EZLOGGERVLSTREAM(axter::log_often) << x << ": " << *i << std::endl;
 		x ++;
 	}
 
-	EZLOGGERVLSTREAM(axter::log_often) << std::endl;
-	EZLOGGERVLSTREAM(axter::log_often) << "Edges (vertex 1, vertex2, face 1, face2)" << std::endl;
 
 	x =0;
 	for(std::vector<Edge>::const_iterator i = edges.begin(); i != edges.end(); i++)
 	{
-		EZLOGGERVLSTREAM(axter::log_often) << x << ": " << *i << std::endl;
 		x ++;
 	}
 }
@@ -238,11 +221,6 @@ void Connexity::getAllNeighbors(index_t startFaceIndex, std::set<index_t>& allNe
 		}
 	}
 
-	//EZLOGGERVLSTREAM(axter::log_often) << "All Neighbors of face:" << startFaceIndex <<":" << neighbors0.size() << ", " << neighbors1.size() << ", " << neighbors2.size() << std::endl;
-	//for(std::set<index_t>::iterator i= allNeighbors.begin(); i != allNeighbors.end(); i++)
-	//{
-	//	EZLOGGERVLSTREAM(axter::log_often) << " >" << *i << std::endl;
-	//}
 }
 
 index_t Connexity::cutNextFace(const std::list<index_t> &facesLeft,
@@ -262,7 +240,6 @@ index_t Connexity::cutNextFace(const std::list<index_t> &facesLeft,
 			const Face& face = faces[faceIndex];
 			if( cutFace(z, face, cut))
 			{
-		//		EZLOGGERVLSTREAM(axter::log_often) << " " << faceIndex << " CUTS it!" << std::endl;
 				return faceIndex;
 			}
 		}
@@ -325,7 +302,6 @@ void Connexity::splitLoop(Scalar z, std::list<index_t> &facesLeft, std::list<Lin
 	{
 		faceIndex = *facesLeft.begin();
 		facesLeft.remove(faceIndex);
-		EZLOGGERVLSTREAM(axter::log_often) << "Current face index:" <<  faceIndex << std::endl;
 		faceIndex = cutNextFace(facesLeft, z, faceIndex, cut);
 		if(faceIndex >= 0)
 		{
@@ -360,7 +336,6 @@ index_t Connexity::findOrCreateEdge(index_t v0, index_t v1, size_t face)
 	std::vector<Edge>::iterator it = find(edges.begin(), edges.end(), e);
 	if(it == edges.end())
 	{
-		// EZLOGGERVLSTREAM(axter::log_often) << "NEW EDGE " << coords << std::endl;
 		edges.push_back(e);
 		edgeIndex = edges.size() -1;
 	}
