@@ -34,7 +34,7 @@
         "src/extrudo.cc",
         "src/extrudo.h"
       ],
-      'cflags_cc' : [],
+      'cflags_cc' : ['-fexceptions'],
       'cflags_cc!': [],
       'conditions': [
         ['OS=="mac"', {
